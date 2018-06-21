@@ -12,7 +12,9 @@ function Totalizavel:new (o,nome)
     self.valor_total=0
     return o
 end
-
+function Totalizavel:getVenda()
+	return self.valor_total
+end
 --Total -- deve ser abstrato--
 -- function Totalizavel:total(itens)
 -- end

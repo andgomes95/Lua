@@ -134,7 +134,11 @@ do
                 break
             end
             --produtos[cod_produto]:getProduto()
-            item:adicionarItem(produtos[cod_produto],produtos[cod_produto]:getValor(),1)
+            if pcall(produtos[cod_produto]:getValor()) then
+                item:adicionarItem(produtos[cod_produto],produtos[cod_produto]:getValor(),1)
+            else
+                print("error")
+            end
             -- contador de itens no carrinho
             carrinho_final[qtd_itens]=item
             print(carrinho_final[qtd_itens]:getValor(),qtd_itens)

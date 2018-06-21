@@ -16,9 +16,9 @@ function ItemVenda:new (o,nome)
     return o
 end
  -- adiciona um novo item --
-function ItemVenda:adicionarItem(produto,valor,quantidade)
+function ItemVenda:adicionarItem(produto,quantidade)
     self.produto=produto
-    self.valor=valor
+    self.valor=produto.valor
     self.quantidade=quantidade
 end
 -- retorna

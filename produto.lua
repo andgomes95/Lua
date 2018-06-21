@@ -4,7 +4,7 @@
 Produto={}
 
 -- Metodo para criar a classe
-function Produto:new (o,nome)
+function Produto:new (o,codigo,nome,valor)
     o = o or {}
     --tabela
     setmetatable(o, self)
