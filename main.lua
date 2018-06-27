@@ -68,6 +68,19 @@ function adicionarCliente(clientes,num_clientes)
     return clientes,num_clientes
 end
 
+function removeCliente(clientes,num_clientes)
+    print("Digite o nome do cliente")
+    cliente=io.read()
+    for i=0,#clientes do
+        if clientes[i]:getNome() == cliente then
+            clientes[i]:removeCliente()
+            table.remove(clientes,i)
+            num_clientes = num_clientes-1
+        end
+    end
+    return clientes,num_clientes
+end
+
 --lista dos clientes
 clientes={}
 --lista dos produtos
@@ -92,27 +105,31 @@ while(flag)
 do
     -- Menu de interacação
     print("Escolha uma Opção")
-    print("0- Para encerrar\n1- Cadastrar Cliente\n2- Ver Clientes Cadastrados\n3- Listar Produtos Disponíveis\n4- Iniciar Venda\n")
+    print("0- Para encerrar\n1- Cadastrar Cliente\n2- Ver Clientes Cadastrados\n3- Remover Clientes\n4- Listar Produtos Disponíveis\n5- Iniciar Venda\n")
     opcao=io.read()
     print("opcao",opcao)
 
-    -- lista os produtos disponíveis
+    -- cadastrar clientes
     if opcao == "1" then
         clientes,num_clientes = adicionarCliente(clientes,num_clientes)
     end
-    -- cadastra um cliente --
+    -- listar clientes
     if opcao == "2" then
         print("--Clientes--")
         print(lista_clientes(clientes))
         print("-------------")
     end
-    -- Lista os clientes cadastrados
+    -- Remove Cliente
     if opcao == "3" then
+        clientes,num_clientes =  removeCliente(clientes,num_clientes)
+    end
+    -- listar produtos
+    if opcao == "4" then
         print(lista_produtos(produtos))
     end
 
     -- Inicia uma nova venda
-    if opcao == "4" then
+    if opcao == "5" then
         print("--Nova Compra---")
         -- cria a instancia de uma nova venda
         novacompra=Venda:new(nill,nill)
