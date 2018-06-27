@@ -68,6 +68,28 @@ function adicionarCliente(clientes,num_clientes)
     return clientes,num_clientes
 end
 
+function alterarCliente(clientes)
+    print("Digite o nome do cliente")
+    local cliente=io.read()
+     for i=0,#clientes do
+        if clientes[i]:getNome() == cliente then
+            print("Nome:")
+            local nome=io.read()
+            print("Endereco:")
+            local endereco = io.read()
+            print("RG:")
+            local rg=io.read()
+            print("Data de Nascimento:")
+            local nascimento= io.read()
+            -- Cadastra um cliente
+            clientes[i]:alteraCliente(nome,endereco,rg,nascimento)
+            return clientes
+        end
+    end
+    print ("Cliente não existente")
+    return clientes
+end
+
 function removeCliente(clientes,num_clientes)
     print("Digite o nome do cliente")
     cliente=io.read()
@@ -80,6 +102,7 @@ function removeCliente(clientes,num_clientes)
     end
     return clientes,num_clientes
 end
+
 
 --lista dos clientes
 clientes={}
@@ -105,7 +128,7 @@ while(flag)
 do
     -- Menu de interacação
     print("Escolha uma Opção")
-    print("0- Para encerrar\n1- Cadastrar Cliente\n2- Ver Clientes Cadastrados\n3- Remover Clientes\n4- Listar Produtos Disponíveis\n5- Iniciar Venda\n")
+    print("0- Para encerrar\n1- Cadastrar Cliente\n2- Ver Clientes Cadastrados\n3- Alterar Cliente\n4- Remover Clientes\n5- Listar Produtos Disponíveis\n6- Iniciar Venda\n")
     opcao=io.read()
     print("opcao",opcao)
 
@@ -119,17 +142,21 @@ do
         print(lista_clientes(clientes))
         print("-------------")
     end
-    -- Remove Cliente
+    -- alterar clientes
     if opcao == "3" then
+        clientes =  alterarCliente(clientes)
+    end
+    -- Remove Cliente
+    if opcao == "4" then
         clientes,num_clientes =  removeCliente(clientes,num_clientes)
     end
     -- listar produtos
-    if opcao == "4" then
+    if opcao == "5" then
         print(lista_produtos(produtos))
     end
 
     -- Inicia uma nova venda
-    if opcao == "5" then
+    if opcao == "6" then
         print("--Nova Compra---")
         -- cria a instancia de uma nova venda
         novacompra=Venda:new(nill,nill)
