@@ -23,6 +23,18 @@ function lista_clientes (clientes)
         end
 end
 
+-- Verificação, utilizada no tratamento de exceções
+-- verifica o codigo do produto
+function verifica_cod_produto(produtos,codigo)
+
+  return produtos[codigo]:getValor()
+end
+-- verifica o código do cliente
+function verifica_cod_cliente(clientes,codigo)
+  return clientes[codigo]:verCliente()
+end
+
+-- funcao para adicionar um cliente
 function adicionarCliente(clientes)
     local cliente=Cliente:new(nill, nill)
     clientes[#clientes+1]=cliente
@@ -40,6 +52,7 @@ function adicionarCliente(clientes)
     return clientes
 end
 
+-- Altera os dados de um cliente
 function alterarCliente(clientes)
     print("Digite o nome do cliente")
     local cliente=io.read()
@@ -62,6 +75,7 @@ function alterarCliente(clientes)
     return clientes
 end
 
+--Apaga um cliente da tabela de clientes.
 function removeCliente(clientes)
     print("Digite o nome do cliente")
     local cliente=io.read()
@@ -79,10 +93,11 @@ function lista_produtos (produtos)
     for pos,item in ipairs(produtos)
         do
             codigo,nome,valor=item:verProduto()
-            print("Cod:",codigo,"Nome:",nome,"Valor:",valor)
+            print("Cod:",pos,"Nome:",nome,"Valor:",valor)
         end
 end
 
+-- adiciona produtos na tabela de produtos.
 function adicionarProduto(produtos)
     local indice =  #produtos+1
     local produto = Produto:new(nill,nill)
@@ -110,7 +125,7 @@ function alterarProduto(produtos)
         end
     end
     print ("Produto não existente")
-    return produtos 
+    return produtos
 end
 
 function removeProduto(produtos)
@@ -206,7 +221,7 @@ do
 
         carrinho_final={}
 
-        
+
 
         print("Adicione Produtos no Carrinho")
         --carrinho de produtos --
@@ -224,16 +239,17 @@ do
                 print("Carrinho Fechado")
                 break
             end
-            --produtos[cod_produto]:getProduto()
-            if pcall(produtos[cod_produto]:getValor()) then
+
+            -- realiza o tratamento de exceção.
+            if pcall(verifica_cod_produto,produtos,cod_produto) then
                 item:adicionarItem(produtos[cod_produto],produtos[cod_produto]:getValor(),1)
+                -- contador de itens no carrinho
+                carrinho_final[qtd_itens]=item
+                print(carrinho_final[qtd_itens]:getValor(),qtd_itens)
+                qtd_itens=qtd_itens+1
             else
-                print("error")
+                print("Código do produto Inválido.\nDigite um novo código menor ou igual á:",#produtos)
             end
-            -- contador de itens no carrinho
-            carrinho_final[qtd_itens]=item
-            print(carrinho_final[qtd_itens]:getValor(),qtd_itens)
-            qtd_itens=qtd_itens+1
         end
         --
         while(1)
@@ -257,9 +273,18 @@ do
                 print("Digite o Código Cliente:")
                 cod_cliente=io.read()
                 cod_cliente=tonumber(cod_cliente)
-                comprador= clientes[cod_cliente]
-                -- associa o comprador a venda.
-                novacompra:novaVenda(num_venda,comprador,1,carrinho_final)
+
+                -- realiza o tratamento da execeção do código cliente
+                if(pcall(verifica_cod_cliente,clientes,cod_cliente)) then
+                  comprador= clientes[cod_cliente]
+                  -- associa o comprador a venda.
+                  novacompra:novaVenda(num_venda,comprador,1,carrinho_final)
+                else
+                  print("Código de Cliente Inválido.")
+                  break
+                end
+
+
             end
             if opcao_venda == "3" then
                 -- realiza o calculo do valor total --
@@ -272,6 +297,7 @@ do
                 lista_itens(carrinho_final)
                 print("-----------------")
                 print("Total ---","R$"..total)
+                print("-----------------\n")
                 break
 
             end

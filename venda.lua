@@ -1,10 +1,12 @@
 --Classe Venda realizando uma herança com Totalizavel
 require "totalizavel"
+
 -- Meta class
+Venda=Totalizavel:new()
+-- clona uma tabela
 function table.clone(org)
   return {table.unpack(org)}
 end
-Venda=Totalizavel:new()
 
 -- Metodo para criar a classe
 function Venda:new (o,nome)
@@ -25,7 +27,7 @@ function Venda:novaVenda(numero,cliente,data,itens)
     self.numero=numero
     self.cliente=cliente
     self.data=data
-    self.itens.clone(itens)
+    self.itens=table.clone(itens)
 end
 
 -- --Realiza o calculo do total das vendas--
