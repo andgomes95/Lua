@@ -50,7 +50,23 @@ function VerCarrinho(carrinho_final)
         end
 end
 
-
+function adicionarCliente(clientes,num_clientes)
+    local cliente=Cliente:new(nill, nill)
+    clientes[num_clientes]=cliente
+    print("Cadastrando Cliente")
+    print("Nome:")
+    local nome=io.read()
+    print("Endereco:")
+    local endereco = io.read()
+    print("RG:")
+    local rg=io.read()
+    print("Data de Nascimento:")
+    local nascimento= io.read()
+    -- Cadastra um cliente
+    cliente:alteraCliente(nome,endereco,rg,nascimento)
+    num_clientes=num_clientes+1
+    return clientes,num_clientes
+end
 
 --lista dos clientes
 clientes={}
@@ -76,37 +92,23 @@ while(flag)
 do
     -- Menu de interacação
     print("Escolha uma Opção")
-    print("0- Para encerrar\n1- Listar Produtos Disponíveis\n2- Cadastrar Cliente\n3- Ver Clientes Cadastrados\n4- Iniciar Venda\n5- Ver carrinho")
+    print("0- Para encerrar\n1- Cadastrar Cliente\n2- Ver Clientes Cadastrados\n3- Listar Produtos Disponíveis\n4- Iniciar Venda\n")
     opcao=io.read()
     print("opcao",opcao)
 
     -- lista os produtos disponíveis
     if opcao == "1" then
-        print(lista_produtos(produtos))
+        clientes,num_clientes = adicionarCliente(clientes,num_clientes)
     end
     -- cadastra um cliente --
     if opcao == "2" then
-        cliente=Cliente:new(nill, nill)
-        clientes[num_clientes]=cliente
-        print("Cadastrando Cliente")
-        print("Nome:")
-        nome=io.read()
-        print("Endereco")
-        endereco = io.read()
-        print("RG")
-        rg=io.read()
-        print("Data Nascimento")
-        nascimento= io.read()
-        -- Cadastra um cliente
-        cliente:cadastrarCliente(nome,endereco,rg,nascimento)
-        num_clientes=num_clientes+1
-        print(clientes[num_clientes-1]:verCliente())
-    end
-    -- Lista os clientes cadastrados
-    if opcao == "3" then
         print("--Clientes--")
         print(lista_clientes(clientes))
         print("-------------")
+    end
+    -- Lista os clientes cadastrados
+    if opcao == "3" then
+        print(lista_produtos(produtos))
     end
 
     -- Inicia uma nova venda
