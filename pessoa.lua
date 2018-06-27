@@ -3,18 +3,17 @@
 -- Meta class
 Pessoa= {}
 
--- Metodo para criar a classe
-function Pessoa:new (o,nome)
+-- Construtor
+function Pessoa:new (o,nome,endereco)
     o = o or {}
-    --tabela
     setmetatable(o, self)
     self.__index = self
-    self.nome=nome
-    self.endereco=endereco
+    self.nome= nill
+    self.endereco= nill
     return o
 end
 
--- metodos da classe
+-- Get e Set
 function Pessoa:getNome ()
     return self.nome
 end
@@ -30,11 +29,3 @@ end
 function Pessoa:setEndereco(endereco)
     self.endereco=endereco
 end
--- --criando a pessoa
--- pessoa=Pessoa:new(nill,nill)
--- --definindo o nome
--- pessoa:setNome("Fernanda")
--- --definindo a idade
--- pessoa:setEndereco("casa")
--- -- exibindo os dados
--- print("Nome:",pessoa:getNome(),"Endereco:",pessoa:getEndereco())

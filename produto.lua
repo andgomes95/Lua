@@ -15,32 +15,42 @@ function Produto:new (o,codigo,nome,valor)
     return o
 end
 
--- Realiza o cadastramento de um produto, faz a função dos setters
-function Produto:cadastraProduto(codigo,nome,valor)
-    self.codigo=codigo
-    self.nome=nome
-    self.valor=valor
-end
--- Retorna os dados do produto de maneira coletiva.
-function Produto:verProduto()
-    return self.codigo,self.nome,self.valor
+-- Metodos da Classe
+function Produto:alterarProduto(codigo,nome,valor)
+    self:setCodigo(codigo)
+    self:setNome(nome)
+    self:setValor(valor)
 end
 
--- Get dos dados
+function Produto:verProduto()
+    return self:getCodigo(),self:getNome(),self:getValor()
+end
+-- Destrutor Produto
+function Produto:destroiProduto()
+    self = {}
+end
+
+-- Get e Set
 function Produto:getValor()
     return self.valor
+end
+
+function Produto:setValor(valor)
+    self.valor = valor
 end
 
 function Produto:getNome()
     return self.nome
 end
 
+function Produto:setNome(nome)
+    self.nome = nome
+end
+
 function Produto:getCodigo()
     return self.codigo
 end
 
-function Produto:getProduto(codigo)
-    if codigo == self.codigo then
-        return Produto:verProduto()
-    end
+function Produto:setCodigo(codigo)
+    self.codigo = codigo
 end
