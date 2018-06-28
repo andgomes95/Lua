@@ -152,7 +152,7 @@ end
 function lista_itens (itens)
     for pos,item in ipairs(itens)
         do
-            nome,valor,qtd=item:getItens()
+            nome,valor,qtd=item:verItens()
             print("Nome:",nome,"Valor:",valor,"Quantidade",qtd)
         end
 end
@@ -225,6 +225,20 @@ function VerCliente()
             print("Comando Inválido")
         end
 end
+
+function adicionarItem(carrinho_final,produtos,cod_produto)
+    for i=1,#carrinho_final do
+        if carrinho_final[i]:getItem() == produtos[cod_produto]:getNome() then
+            carrinho_final[i]:setQuantidade(carrinho_final[i]:getQuantidade()+1)
+            return carrinho_final
+        end
+    end
+    item:alteraItem(produtos[cod_produto])
+    carrinho_final[#carrinho_final+1]=item
+    print(carrinho_final[#carrinho_final]:getValor(),qtd_itens)
+    return carrinho_final
+end
+
 flag=1
 while(flag)
 do
@@ -250,6 +264,7 @@ do
 
 
         print("Adicione Produtos no Carrinho")
+        lista_produtos(produtos)
         --carrinho de produtos --
         while(1)
         do
@@ -268,11 +283,7 @@ do
 
             -- realiza o tratamento de exceção.
             if pcall(verifica_cod_produto,produtos,cod_produto) then
-                item:adicionarItem(produtos[cod_produto],produtos[cod_produto]:getValor(),1)
-                -- contador de itens no carrinho
-                carrinho_final[qtd_itens]=item
-                print(carrinho_final[qtd_itens]:getValor(),qtd_itens)
-                qtd_itens=qtd_itens+1
+                carrinho_final = adicionarItem(carrinho_final,produtos,cod_produto)
             else
                 print("Código do produto Inválido.\nDigite um novo código menor ou igual á:",#produtos)
             end
@@ -288,13 +299,11 @@ do
                 --ver o carrinho_final
                 --VerCarrinho(carrinho_final)
                 print("--Valor Final--")
-                print(novacompra:total(carrinho_final,qtd_itens))
+                print(novacompra:total())
 
             end
 
             if opcao_venda == "2" then
-                --associa o carrinho a um determinado cliente
-                -- function Venda:novaVenda(numero,cliente,data,itens)
                 lista_clientes(clientes)
                 print("Digite o Código Cliente:")
                 cod_cliente=io.read()
@@ -304,7 +313,7 @@ do
                 if(pcall(verifica_cod_cliente,clientes,cod_cliente)) then
                   comprador= clientes[cod_cliente]
                   -- associa o comprador a venda.
-                  novacompra:novaVenda(num_venda,comprador,1,carrinho_final)
+                  novacompra:alteraVenda(num_venda,comprador,1,carrinho_final)
                 else
                   print("Código de Cliente Inválido.")
                   break
@@ -314,7 +323,7 @@ do
             end
             if opcao_venda == "3" then
                 -- realiza o calculo do valor total --
-                novacompra:total(carrinho_final,qtd_itens)
+                novacompra:total()
                 --comprovante--
                 print("--Comprovante de Compra--")
                 nome,total=novacompra:getVenda()

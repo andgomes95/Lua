@@ -12,14 +12,14 @@ function ItemVenda:new (o,nome)
     self.__index = self
     self.produto = nill
     self.valor = nill
-    self.quantidade = nill
+    self.quantidade = 0
     return o
 end
  -- adiciona um novo item --
-function ItemVenda:alteraItem(produto,quantidade)
+function ItemVenda:alteraItem(produto)
     self:setProduto(produto)
     self:setValor(produto:getValor())
-    self:setQuantidade(quantidade)
+    self:setQuantidade(self:getQuantidade() + 1)
 end
 
 function ItemVenda:verItens()
