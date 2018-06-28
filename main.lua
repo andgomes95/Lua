@@ -56,7 +56,10 @@ end
 function alterarCliente(clientes)
     print("Digite o nome do cliente")
     local cliente=io.read()
-     for i=0,#clientes do
+    local contador = 0
+     for i=1,#clientes do
+        print (i)
+        print (clientes[i]:getNome())
         if clientes[i]:getNome() == cliente then
             print("Nome:")
             local nome=io.read()
@@ -69,9 +72,14 @@ function alterarCliente(clientes)
             -- Cadastra um cliente
             clientes[i]:alteraCliente(nome,endereco,rg,nascimento)
             return clientes
+        elseif clientes[i]:getNome() ~= cliente then
+            print ("oi")
+            contador = contador + i
         end
     end
-    print ("Cliente não existente")
+    if contador == #clientes then
+        print ("Cliente não existente")
+    end
     return clientes
 end
 
@@ -79,7 +87,7 @@ end
 function removeCliente(clientes)
     print("Digite o nome do cliente")
     local cliente=io.read()
-    for i=0,#clientes do
+    for i=1,#clientes do
         if clientes[i]:getNome() == cliente then
             clientes[i]:destroiCliente()
             table.remove(clientes,i)
@@ -113,7 +121,7 @@ end
 function alterarProduto(produtos)
     print("Digite o nome do produto")
     local produto=io.read()
-     for i=0,#produtos do
+     for i=1,#produtos do
         if produtos[i]:getNome() == produto then
             print("Nome:")
             local nome=io.read()
@@ -131,7 +139,7 @@ end
 function removeProduto(produtos)
     print("Digite o nome do cliente")
     local produto=io.read()
-    for i=0,#produtos do
+    for i=1,#produtos do
         if produtos[i]:getNome() == produto then
             produtos[i]:destroiProduto()
             table.remove(produtos,i)
@@ -177,46 +185,62 @@ for i=0,5,1
         produtos[i]=produto
         produto:alterarProduto(i+001,"Produto "..(i),25.00+i)
     end
-
+function VerProduto()
+    print("1- Adicionar Produto\n2- Produtos Cadastrados\n3- Alterar Produto\n4- Remover produto\n5- Voltar")
+    opcao2 = io.read()        
+    -- listar produtos
+    if opcao2 == "1" then
+        produtos = adicionarProduto(produtos)
+    elseif opcao2 == "2" then
+        lista_produtos(produtos)
+    elseif opcao2 == "3" then
+        produtos = alterarProduto(produtos)
+    elseif opcao2 == "4" then
+        produtos = removeProduto(produtos)
+    elseif opcao2 == "5" then
+        return 
+    else
+        print("Comando Inválido")
+    end
+end
+function VerCliente()
+    print("1- Cadastrar Cliente\n2- Clientes Cadastrados\n3- Alterar Cliente\n4- Remover Clientes\n5- Voltar")
+    opcao2 = io.read()
+        if opcao2 == "1" then
+            print("--Cadastrar Clientes--")
+            clientes,num_clientes = adicionarCliente(clientes,num_clientes)         
+        elseif opcao2 == "2" then
+            print("--Clientes--")
+            print(lista_clientes(clientes))
+            print("-------------")
+        -- Alterar clientes    
+        elseif opcao2 == "3" then
+            clientes =  alterarCliente(clientes)
+        -- Remove Cliente
+        elseif opcao2 == "4" then
+            clientes,num_clientes =  removeCliente(clientes,num_clientes)
+        elseif opcao2 == "5" then
+            return 
+        else
+            print("Comando Inválido")
+        end
+end
 flag=1
 while(flag)
 do
     -- Menu de interacação
     print("Escolha uma Opção")
-    print("0- Para encerrar\n1- Cadastrar Cliente\n2- Ver Clientes Cadastrados\n3- Alterar Cliente\n4- Remover Clientes\n5- Adicionar Produto\n6- Listar Produtos Disponíveis\n7- Alterar Produtos\n8- Remove Produto\n9- Iniciar Venda\n")
+    print("0- Para encerrar\n1- Clientes\n2- Produtos\n3- Iniciar Venda\n")
     opcao=io.read()
     print("opcao",opcao)
-
-    -- cadastrar clientes
     if opcao == "1" then
-        clientes,num_clientes = adicionarCliente(clientes,num_clientes)
-    -- listar clientes
+        print("Escolha uma Opção")
+        VerCliente()
     elseif opcao == "2" then
-        print("--Clientes--")
-        print(lista_clientes(clientes))
-        print("-------------")
-    -- alterar clientes
-    elseif opcao == "3" then
-        clientes =  alterarCliente(clientes)
-    -- Remove Cliente
-    elseif opcao == "4" then
-        clientes,num_clientes =  removeCliente(clientes,num_clientes)
-
-    -- listar produtos
-    elseif opcao == "5" then
-        produtos = adicionarProduto(produtos)
-
-    elseif opcao == "6" then
-        print("--Produtos--")
-        lista_produtos(produtos)
-        print("-------------")
-
-    elseif opcao == "7" then
-        produtos = alterarProduto(produtos)
-    elseif opcao == "8" then
-        produtos = removeProduto(produtos)
+        print("Escolha uma Opção")
+        VerProduto()
     -- Inicia uma nova venda
-    elseif opcao == "9" then
+    elseif opcao == "3" then
         print("--Nova Compra---")
         -- cria a instancia de uma nova venda
         novacompra=Venda:new(nill,nill)
@@ -227,7 +251,7 @@ do
 
         print("Adicione Produtos no Carrinho")
         --carrinho de produtos --
-        while(0)
+        while(1)
         do
             --cria um novo item para ser adicionado no carrinho.
             item=ItemVenda:new(nill,nill)
@@ -254,7 +278,7 @@ do
             end
         end
         --
-        while(0)
+        while(1)
         do
             print("Digite:\n1 para Ver o carrinho\n2 para Associar o carrinho a um cliente\n3 para encerrar")
             opcao_venda= io.read()
@@ -300,6 +324,7 @@ do
                 print("-----------------")
                 print("Total ---","R$"..total)
                 print("-----------------\n")
+                carrinho_final = {}
                 break
 
             end
