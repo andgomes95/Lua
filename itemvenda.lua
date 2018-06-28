@@ -10,9 +10,9 @@ function ItemVenda:new (o,nome)
     --tabela
     setmetatable(o, self)
     self.__index = self
-    self:setProduto(nill)
-    self:setValor(nill)
-    self:setQuantidade(nill)
+    self.produto = nill
+    self.valor = nill
+    self.quantidade = nill
     return o
 end
  -- adiciona um novo item --
@@ -35,7 +35,8 @@ function ItemVenda:getItem()
 end
 
 function ItemVenda:total()
-    return self:getQuantidade()*self:getValor()
+    self:setValorTotal(self:getQuantidade()*self:getValor())
+    return self:getValorTotal()
 end
 
 --get e set
@@ -47,18 +48,18 @@ function ItemVenda:setProduto(produto)
     self.produto = produto
 end
 
-function Venda:getValor()
+function ItemVenda:getValor()
     return self.valor
 end
 
-function Venda:setValor(valor)
+function ItemVenda:setValor(valor)
     self.valor = valor
 end
 
-function Venda:getQuantidade()
+function ItemVenda:getQuantidade()
     return self.quantidade
 end
 
-function Venda:setQuantidade(quantidade)
+function ItemVenda:setQuantidade(quantidade)
     self.quantidade = quantidade
 end
