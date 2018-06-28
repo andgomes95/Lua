@@ -10,26 +10,55 @@ function ItemVenda:new (o,nome)
     --tabela
     setmetatable(o, self)
     self.__index = self
-    self.produto= nill
-    self.valor= nill
-    self.quantidade=nill
+    self:setProduto(nill)
+    self:setValor(nill)
+    self:setQuantidade(nill)
     return o
 end
  -- adiciona um novo item --
-function ItemVenda:adicionarItem(produto,quantidade)
-    self.produto=produto
-    self.valor=produto.valor
-    self.quantidade=quantidade
+function ItemVenda:alteraItem(produto,quantidade)
+    self:setProduto(produto)
+    self:setValor(produto:getValor())
+    self:setQuantidade(quantidade)
 end
--- retorna
+
+function ItemVenda:verItens()
+    return self:getProduto():getNome(),self:getValor(),self:getQuantidade()
+end
+
+function ItemVenda:destroiItem()
+    self = {}
+end
+
 function ItemVenda:getItem()
-    return self.produto:getNome()
+    return self:getProduto():getNome()
 end
 
-function ItemVenda:getItens()
-    return self.produto:getNome(),self.valor,self.quantidade
+function ItemVenda:total()
+    return self:getQuantidade()*self:getValor()
 end
 
-function ItemVenda:getValor()
+--get e set
+function ItemVenda:getProduto()
+    return self.produto
+end
+
+function ItemVenda:setProduto(produto)
+    self.produto = produto
+end
+
+function Venda:getValor()
     return self.valor
+end
+
+function Venda:setValor(valor)
+    self.valor = valor
+end
+
+function Venda:getQuantidade()
+    return self.quantidade
+end
+
+function Venda:setQuantidade(quantidade)
+    self.quantidade = quantidade
 end

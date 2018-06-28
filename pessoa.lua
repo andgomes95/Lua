@@ -4,7 +4,7 @@
 Pessoa= {}
 
 -- Construtor
-function Pessoa:new (o,nome,endereco)
+function Pessoa:new (o,nome)
     o = o or {}
     setmetatable(o, self)
     self.__index = self

@@ -47,7 +47,3 @@ end
 function Cliente:getDataNascimento(data_nascimento)
     return self.data_nascimento
 end
-
-function Cliente:removeCliente()
-    self = {}
-end

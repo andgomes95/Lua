@@ -207,7 +207,9 @@ do
         produtos = adicionarProduto(produtos)
 
     elseif opcao == "6" then
+        print("--Produtos--")
         lista_produtos(produtos)
+        print("-------------")
 
     elseif opcao == "7" then
         produtos = alterarProduto(produtos)
@@ -225,7 +227,7 @@ do
 
         print("Adicione Produtos no Carrinho")
         --carrinho de produtos --
-        while(1)
+        while(0)
         do
             --cria um novo item para ser adicionado no carrinho.
             item=ItemVenda:new(nill,nill)
@@ -252,7 +254,7 @@ do
             end
         end
         --
-        while(1)
+        while(0)
         do
             print("Digite:\n1 para Ver o carrinho\n2 para Associar o carrinho a um cliente\n3 para encerrar")
             opcao_venda= io.read()

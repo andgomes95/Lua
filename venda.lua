@@ -14,42 +14,71 @@ function Venda:new (o,nome)
     --tabela
     setmetatable(o, self)
     self.__index = self
-    self.numero=0
-    self.data=nill
-    self.cliente=nill
-    self.itens={}
-    self.calculado=0
+    self:setNumero(0)
+    self:setData(nill)
+    self:setCliente(nill)
+    self.itens = {}
     return o
 end
 
 -- cria uma nova venda --
-function Venda:novaVenda(numero,cliente,data,itens)
-    self.numero=numero
-    self.cliente=cliente
-    self.data=data
+function Venda:alteraVenda(numero,cliente,data,itens)
+    self:setNumero(numero)
+    self:setCliente(cliente)
+    self:setData(data)
     self.itens=table.clone(itens)
 end
 
+function Venda:verVenda()
+    return self:getNumero(),self:getData(),self:getCliente(),self:getItens()
+end
+
+function Venda:destroiVenda()
+    self = {}
+end
 -- --Realiza o calculo do total das vendas--
-function Venda:total(itens,numero_itens)
-    print(self.calculado)
-if(self.calculado == 0)
-    then
-         for i=1,numero_itens-1,1
-            do
-                if(itens[1]:getValor() ~= nil)
-                    then
-                        valor=tonumber(itens[i]:getValor())
-                        self.valor_total=self.valor_total+valor
-                        self.calculado=1
-                    end
-            end
-    else
-         return self.valor_total
-    end
-return self.valor_total
+function Venda:total()
+    for i=1,#self:getItens(),1
+        do
+            local valor=self:getItens()[i]:total()
+            self:setValorTotal(self:getValorTotal()+valor)
+        end
+    return self:getValorTotal()
 end
 
 function Venda:getVenda()
-  return self.cliente,self.valor_total
+  return self:getCliente(),self:getValorTotal()
+end
+
+-- Get e Set
+function Venda:getNumero()
+    return self.numero
+end
+
+function Venda:setNumero(numero)
+    self.numero = numero
+end
+
+function Venda:getData()
+    return self.data
+end
+
+function Venda:setData(data)
+    self.data = data
+end
+
+function Venda:getCliente()
+    return self.cliente
+end
+
+function Venda:setCliente(cliente)
+    self.cliente = cliente
+end
+
+function Venda:getItens()
+    return self.itens
+end
+
+function Venda:setItens(itens)
+    self.itens[#itens+1] = itens
 end

@@ -1,20 +1,24 @@
 --Classe Total
 
--- Meta class
 Totalizavel={}
 
--- Metodo para criar a classe
+-- Construtor
 function Totalizavel:new (o,nome)
     o = o or {}
-    --tabela
     setmetatable(o, self)
     self.__index = self
-    self.valor_total=0
+    self:setValorTotal(0)
     return o
 end
-function Totalizavel:getVenda()
+function Totalizavel:total()
+	return self:getValorTotal()
+end
+
+-- Get e Set
+function Totalizavel:getValorTotal()
 	return self.valor_total
 end
---Total -- deve ser abstrato--
--- function Totalizavel:total(itens)
--- end
+
+function Totalizavel:setValorTotal(valor_total)
+	self.valor_total = valor_total
+end
